@@ -15,11 +15,11 @@ app.get("/repositories", (request, response) => {
 app.post("/repositories", (request, response) => {
   const { title, url, techs } = request.body;
 
-  const repositoryExists = repositories.some(repo => repo.title === title);
+  // const repositoryExists = repositories.some(repo => repo.title === title);
 
-  if (repositoryExists) {
-    return response.status(400).json({ error: "repository already exists" });
-  }
+  // if (repositoryExists) {
+  //   return response.status(400).json({ error: "repository already exists" });
+  // }
 
   const repository = {
     id: uuid(),
