@@ -13,12 +13,12 @@ app.get("/repositories", (request, response) => {
 });
 
 app.post("/repositories", (request, response) => {
-  const { title, url, techs } = request.body
+  const { title, url, techs } = request.body;
 
   const repositoryExists = repositories.some(repo => repo.title === title);
 
   if (repositoryExists) {
-    return response.status(400).json({ error: "repository already exists"});
+    return response.status(400).json({ error: "repository already exists" });
   }
 
   const repository = {
@@ -66,16 +66,18 @@ app.delete("/repositories/:id", (request, response) => {
 
 app.post("/repositories/:id/like", (request, response) => {
   const { id } = request.params;
+  const { likes } = request.body;
 
-  repositoryIndex = repositories.findIndex(repository => repository.id === id);
+  const repository = repositories.find(repository => repository.id === id);
 
-  if (repositoryIndex < 0) {
+  if (!repository) {
     return response.status(404).json({ error: "Repository not found" });
   }
 
-  const likes = ++repositories[repositoryIndex].likes;
+  ++repository.likes;
 
-  return response.json('likes');
+  console.log(" Likes:" + likes);
+  return response.status(201).json(repository);
 });
 
 module.exports = app;
